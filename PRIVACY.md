@@ -30,7 +30,7 @@ Cairn has **no accounts**. You never give us your name, email, phone number, or 
 - The anonymous install ID is a random string generated locally on first launch. It is **not** a hardware ID, advertising ID, or account. Deleting local data (Section 5) discards it and a new one is generated.
 - Nothing you type — no display name, no chat text, no free text — is included in analytics.
 
-**Update check** (once per cold start, no action needed): the app asks our Cloudflare Worker for the latest version number and a download link, so it can show an "update available" notice on the home screen. The request carries only the anonymous install ID and the request-signing headers (no body); the Worker keeps no record of it beyond the short-lived request logs described in Section 5.
+**Update check** (once per cold start, no action needed): the app asks our Cloudflare Worker for the latest version number and a download link, so it can show an "update available" notice on the home screen. The request carries no identifier and no body (only a fixed client-name header); the Worker keeps nothing beyond the short-lived request logs described in Section 5.
 
 **Data sent to our backend when you use specific features:**
 - **AI Speaking Coach — text**: The messages you type (or that were transcribed from your voice) and the conversation history for the current topic are sent to our Cloudflare Worker, which generates the reply with **Cloudflare Workers AI** (Qwen3-30B-A3B, running on Cloudflare's network). The request carries the anonymous install ID (used for rate limiting) but no display name or other identifier. Nothing is sent to any other AI vendor.
@@ -60,7 +60,7 @@ Cairn is not directed at children under 13. We do not knowingly collect data fro
 All traffic between the app and our backend uses HTTPS/TLS. The app holds no AI provider API keys; all upstream calls are made by our Worker, which applies request signing, per-device rate limits, and daily quotas to limit abuse.
 
 ### 7. International data transfer
-Our backend and the services below run outside mainland China (Cloudflare's global network and PostHog in the United States). By using the analytics, AI coach, voice, and cloud text-to-speech features, you consent to your data being processed in those locations.
+Our backend and the services below run outside mainland China (Cloudflare's global network and PostHog in the United States). By using the analytics, update check, AI coach, voice, and cloud text-to-speech features, you consent to your data being processed in those locations.
 
 ### 8. Third-party services
 - **Cloudflare** (Workers hosting; Workers AI for the AI coach's replies, speech-to-text and text-to-speech; Workers Logs) — https://www.cloudflare.com/privacypolicy/
@@ -103,7 +103,7 @@ Cairn **没有账号系统**。你无需提供姓名、邮箱、手机号或任�
 - 匿名安装 ID 是首次启动时在本地随机生成的字符串，**不是**硬件 ID、广告 ID 或账号。清除本地数据（第 5 节）会一并删除它，下次启动重新生成。
 - 你输入的任何内容——昵称、对话文字、自由文本——都不会进入统计。
 
-**更新检查**（每次冷启动自动进行一次，无需你操作）：App 向我们的 Cloudflare Worker 询问最新版本号和下载链接，以便在首页提示「有新版本」。这个请求只带匿名安装 ID 和请求签名头（没有请求体）；Worker 除第 5 节所述的短期请求日志外不保留任何记录。
+**更新检查**（每次冷启动自动进行一次，无需你操作）：App 向我们的 Cloudflare Worker 询问最新版本号和下载链接，以便在首页提示「有新版本」。这个请求不带任何标识、没有请求体（只有一个固定的客户端名称头）；Worker 除第 5 节所述的短期请求日志外不保留任何东西。
 
 **使用特定功能时发送到我们后端的数据：**
 - **AI 口语陪练 · 文字**：你输入（或由语音转写得到）的文字，连同当前话题的对话历史，发送到我们的 Cloudflare Worker，由 **Cloudflare Workers AI**（跑在 Cloudflare 网络上的 Qwen3-30B-A3B 模型）生成回复。请求附带匿名安装 ID（用于限流），不附带昵称或其他标识。不会发送给任何其他 AI 厂商。
@@ -133,7 +133,7 @@ Cairn 不面向 13 岁以下儿童，且不会明知故意地收集儿童数据�
 App 与后端之间的所有通信使用 HTTPS/TLS。App 内不持有任何 AI 服务商的 API 密钥，所有上游调用由我们的 Worker 发起，并通过请求签名、按设备限流和每日配额限制滥用。
 
 ### 7. 跨境传输
-我们的后端及下列服务均位于中国大陆境外（Cloudflare 全球网络、PostHog 美国）。使用统计、AI 陪练、语音和云端朗读功能即表示你同意数据在上述地点处理。
+我们的后端及下列服务均位于中国大陆境外（Cloudflare 全球网络、PostHog 美国）。使用统计、更新检查、AI 陪练、语音和云端朗读功能即表示你同意数据在上述地点处理。
 
 ### 8. 第三方服务
 - **Cloudflare**（Workers 托管；Workers AI 负责 AI 陪练的回复生成、语音识别与语音合成；Workers Logs）— https://www.cloudflare.com/privacypolicy/
