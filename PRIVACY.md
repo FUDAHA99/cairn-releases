@@ -19,14 +19,15 @@ Cairn has **no accounts**. You never give us your name, email, phone number, or 
 - Vocabulary study progress (which words you know / are unsure about / don't know)
 - Quiz answers and mistake notebook
 - Listening / reading / grammar answer history and study plan
+- Study check-in record (date of your last study action, streak count, which modules you used each day this week, completed units)
 - AI chat conversation history within the app
-- Speaking-practice recordings (the "read-aloud" module; held only in the app's local cache, never uploaded)
-- Audio the app has synthesized for you (cached locally so it is not downloaded twice)
+- Speaking-practice recordings (the "read-aloud" module; deleted when the take ends or you leave the screen, never uploaded)
+- Audio the app has synthesized for you (cached locally so it is not downloaded twice; only the 60 most recent clips are kept)
 
 **Anonymous usage analytics** (sent automatically on every cold start, no action needed):
 - We use **PostHog** (US region) to count how the app is used. Events are relayed through our own Cloudflare Worker; the app never talks to PostHog directly.
 - Exactly five event types are reported: `app_open`, `onboarding_done`, `unit_selected`, `module_start`, `module_complete`.
-- Each event carries a few properties (module name, unit number, correct / total answers, whether a study plan exists, onboarding goal / level / minutes / number of interests) plus the **app version** and an **anonymous install ID**.
+- Each event carries a few properties (module name, unit number, correct / total answers, whether a study plan exists, whether the tapped unit was locked, onboarding goal / level / minutes / number of interests) plus the **app version** and an **anonymous install ID**.
 - The anonymous install ID is a random string generated locally on first launch. It is **not** a hardware ID, advertising ID, or account. Deleting local data (Section 5) discards it and a new one is generated.
 - Nothing you type — no display name, no chat text, no free text — is included in analytics.
 
@@ -92,14 +93,15 @@ Cairn **没有账号系统**。你无需提供姓名、邮箱、手机号或任�
 - 单词学习进度（哪些词你已认识 / 模糊 / 不认识）
 - 测验答题记录与错题本
 - 听力 / 阅读 / 语法的答题历史与学习计划
+- 学习打卡记录（最后学习日期、连续天数、本周每天学过哪些模块、已完成单元）
 - App 内 AI 对话历史
-- 口语跟读模块的录音（只存在 App 本地缓存，不上传）
-- App 为你合成过的朗读音频（缓存在本机，避免重复下载）
+- 口语跟读模块的录音（录完或离开页面即删，不上传）
+- App 为你合成过的朗读音频（缓存在本机，避免重复下载；只保留最近 60 段）
 
 **匿名使用统计**（每次冷启动自动上报，无需你操作）：
 - 我们使用 **PostHog**（美国区）统计 App 的使用情况。事件经我们自己的 Cloudflare Worker 转发，App 不直接连接 PostHog。
 - 只上报 5 种事件：`app_open`、`onboarding_done`、`unit_selected`、`module_start`、`module_complete`。
-- 每个事件附带少量属性（模块名、单元号、答对数 / 总题数、是否有学习计划、引导时选的目标 / 水平 / 时长 / 兴趣数量），以及 **App 版本号** 和一个 **匿名安装 ID**。
+- 每个事件附带少量属性（模块名、单元号、答对数 / 总题数、是否有学习计划、所点单元是否已解锁、引导时选的目标 / 水平 / 时长 / 兴趣数量），以及 **App 版本号** 和一个 **匿名安装 ID**。
 - 匿名安装 ID 是首次启动时在本地随机生成的字符串，**不是**硬件 ID、广告 ID 或账号。清除本地数据（第 5 节）会一并删除它，下次启动重新生成。
 - 你输入的任何内容——昵称、对话文字、自由文本——都不会进入统计。
 
