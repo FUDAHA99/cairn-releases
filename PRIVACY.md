@@ -1,7 +1,7 @@
 # Privacy Policy · Cairn
 
 **Effective date: 2026-07-02**
-**Last updated: 2026-09-06**
+**Last updated: 2026-09-09**
 
 ---
 
@@ -21,7 +21,6 @@ Cairn has **no accounts**. You never give us your name, email, phone number, or 
 - Listening / reading / grammar answer history and study plan
 - Study check-in record (date of your last study action, streak count, which modules you used each day this week, completed units)
 - AI chat conversation history within the app
-- Speaking-practice recordings (the "read-aloud" module; deleted when the take ends or you leave the screen, never uploaded)
 - Audio the app has synthesized for you (cached locally so it is not downloaded twice; only the 60 most recent clips are kept)
 
 **Anonymous usage analytics** (sent automatically on every cold start, no action needed):
@@ -35,6 +34,7 @@ Cairn has **no accounts**. You never give us your name, email, phone number, or 
 
 **Data sent to our backend when you use specific features:**
 - **AI Speaking Coach — text**: The messages you type (or that were transcribed from your voice) and the conversation history for the current topic are sent to our Cloudflare Worker, which generates the reply with **Cloudflare Workers AI** (Qwen3-30B-A3B, running on Cloudflare's network). The request carries the anonymous install ID (used for rate limiting) but no display name or other identifier. Nothing is sent to any other AI vendor.
+- **Read-aloud practice**: when you record yourself reading the reference sentence, the take is uploaded to our Cloudflare Worker, transcribed by **Cloudflare Workers AI (Whisper)** and compared word by word with the sentence to show which words were recognised. The recording is discarded after transcription (and deleted from your device); only the score is kept locally. The same one-time notice and consent as voice input below applies.
 - **AI Speaking Coach — voice input**: If you tap the microphone in the AI coach, your recording is uploaded to our Cloudflare Worker and transcribed by **Cloudflare Workers AI (Whisper)**. The recording is discarded after transcription; only the resulting text continues into the chat flow above. The app shows a one-time notice and asks for your consent before the first upload.
 - **Text-to-speech**: Vocabulary pronunciations, listening passages and the reference sentences in speaking practice are all **bundled MP3 files that play offline** — no network request, nothing sent to us. Only AI-coach replies are read aloud by **Cloudflare Workers AI (Deepgram Aura-1)**, and only when you tap the speaker on a reply (or switch on *Profile → Auto-read AI replies*): the reply text is sent to our Worker and the returned audio is cached on your device.
 
@@ -46,7 +46,7 @@ Cairn has **no accounts**. You never give us your name, email, phone number, or 
 - Crash reports or diagnostics (no crash-reporting SDK is integrated)
 
 ### 3. Permissions
-- **Microphone (RECORD_AUDIO)**: Used by the speaking-practice module (recording stays on device) and by voice input in the AI coach (recording is uploaded for transcription, with your consent, see Section 2).
+- **Microphone (RECORD_AUDIO)**: Used by read-aloud practice and by voice input in the AI coach; recordings are uploaded for transcription with your consent and discarded afterwards (see Section 2).
 - **Network**: Used for analytics, the update check, the AI coach, voice transcription, and cloud text-to-speech. Vocabulary study, quizzes, reading, and grammar work offline.
 
 ### 4. Children under 13
@@ -95,7 +95,6 @@ Cairn **没有账号系统**。你无需提供姓名、邮箱、手机号或任�
 - 听力 / 阅读 / 语法的答题历史与学习计划
 - 学习打卡记录（最后学习日期、连续天数、本周每天学过哪些模块、已完成单元）
 - App 内 AI 对话历史
-- 口语跟读模块的录音（录完或离开页面即删，不上传）
 - App 为你合成过的朗读音频（缓存在本机，避免重复下载；只保留最近 60 段）
 
 **匿名使用统计**（每次冷启动自动上报，无需你操作）：
@@ -109,6 +108,7 @@ Cairn **没有账号系统**。你无需提供姓名、邮箱、手机号或任�
 
 **使用特定功能时发送到我们后端的数据：**
 - **AI 口语陪练 · 文字**：你输入（或由语音转写得到）的文字，连同当前话题的对话历史，发送到我们的 Cloudflare Worker，由 **Cloudflare Workers AI**（跑在 Cloudflare 网络上的 Qwen3-30B-A3B 模型）生成回复。请求附带匿名安装 ID（用于限流），不附带昵称或其他标识。不会发送给任何其他 AI 厂商。
+- **口语跟读**：你跟读标准句的录音会上传到我们的 Cloudflare Worker，由 **Cloudflare Workers AI（Whisper）** 转写成文字，再逐词和标准句比对，标出哪些词被识别到。转写完成后不保留录音（本机的副本也会删除），只在本机保存分数。首次使用前的告知与同意和下面的语音输入共用。
 - **AI 口语陪练 · 语音输入**：在 AI 陪练里点击麦克风时，你的录音会上传到我们的 Cloudflare Worker，由 **Cloudflare Workers AI（Whisper）** 转写成文字。转写完成后不保留录音，只有转写出的文字进入上面的对话流程。首次上传前 App 会弹窗告知并征得你的同意。
 - **朗读**：词汇发音、听力原文、跟读标准句都是**打包在 App 里的 MP3，离线播放** —— 不联网，也不会有任何内容发给我们。只有 AI 陪练的回复由 **Cloudflare Workers AI（Deepgram Aura-1）** 朗读，且仅在你点了回复旁的喇叭（或在「我的 → 自动朗读 AI 回复」里打开开关）时才会发生：回复文本发送到我们的 Worker，返回的音频缓存在你的设备上。
 
@@ -120,7 +120,7 @@ Cairn **没有账号系统**。你无需提供姓名、邮箱、手机号或任�
 - 崩溃报告或诊断数据（未集成任何崩溃收集 SDK）
 
 ### 3. 权限说明
-- **麦克风（RECORD_AUDIO）**：用于口语跟读模块（录音只在本地）和 AI 陪练的语音输入（录音在你同意后上传转写，见第 2 节）。
+- **麦克风（RECORD_AUDIO）**：用于口语跟读和 AI 陪练的语音输入；录音在你同意后上传转写、转写后即删（见第 2 节）。
 - **网络**：用于使用统计、更新检查、AI 陪练、语音转写和云端朗读。单词学习、测验、阅读、语法可离线使用。
 
 ### 4. 13 岁以下儿童
